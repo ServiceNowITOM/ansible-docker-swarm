@@ -1,0 +1,15 @@
+---
+# file: group_vars/all.yml
+
+ansible_ssh_user: ubuntu
+
+apt_cache_valid_time: 3600
+
+docker_gpg_key_server: hkp://p80.pool.sks-keyservers.net:80
+docker_gpg_recv_keys: 58118E89F3A912897C070ADBF76221572C52609D
+docker_apt_repo: "deb https://apt.dockerproject.org/repo ubuntu-trusty main"
+
+docker_swarm_manage_cmd: "manage -H tcp://0.0.0.0:4000 --replication --advertise {{ ansible_default_ipv4.address }}:4000 consul://{{ ansible_default_ipv4.address }}:8500"
+# Need to use hostvars to get manager IP address to avoid hard coding it
+docker_swarm_join_cmd: "join --advertise {{ ansible_default_ipv4.address }}:2375 consul://10.0.0.10:8500"
+

@@ -1,0 +1,44 @@
+# file: docker-swarm.yml
+---
+- hosts: manager
+  gather_facts: no
+
+  tasks:
+  - name: Run consul container
+    docker:
+      name: consul
+      image: progrium/consul
+      pull: missing
+      detach: yes
+      ports: 8500:8500
+      command: -server -bootstrap
+      restart_policy: always
+      restart_policy_retry: 0
+      state: started
+      
+  - name: Run swarm manager container
+    docker:
+      name: manager
+      image: swarm
+      command: "{{ docker_swarm_manage_cmd }}"
+      pull: missing
+      detach: yes
+      ports: 4000:4000
+      expose: 4000
+      restart_policy: always
+      restart_policy_retry: 0
+      state: started
+      
+- hosts: nodes
+  gather_facts: no
+      
+  tasks:
+  - name: Run swarm nodes
+    docker:
+      image: swarm
+      command: "{{ docker_swarm_join_cmd }}"
+      pull: missing
+      detach: yes
+      restart_policy: always
+      restart_policy_retry: 0
+      state: started  

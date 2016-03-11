@@ -1,0 +1,8 @@
+# file: site.yml
+---
+- include: docker-engine.yml
+- include: docker-swarm.yml
+        
+        
+        
+        
