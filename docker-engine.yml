@@ -56,7 +56,7 @@
         force: yes
         state: latest
         
-    - name: Update /etc/defaults/docker
+    - name: Update /etc/default/docker
       lineinfile:
         dest: /etc/default/docker
         backup: yes

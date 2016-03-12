@@ -11,7 +11,7 @@
       pull: missing
       detach: yes
       ports: 8500:8500
-      command: -server -bootstrap
+      command: -server -bootstrap-expect 1
       restart_policy: always
       restart_policy_retry: 0
       state: started
